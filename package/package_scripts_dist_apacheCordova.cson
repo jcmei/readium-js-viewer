@@ -1,0 +1,25 @@
+
+#
+# See package.cson for more information
+#
+
+#=====================
+#    'pre:apacheCordova': '
+#
+#        npm run dist
+#    '
+
+#=====================
+    'apacheCordova': '
+
+        npm run mkdirp
+            dist/apache-cordova/www
+        &&
+        npm run ncp
+            dist/cloud-reader/
+            dist/apache-cordova/www/
+        &&
+        npm run ncp
+            src/apache-cordova/
+            dist/apache-cordova/
+    '
