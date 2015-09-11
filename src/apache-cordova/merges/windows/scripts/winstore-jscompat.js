@@ -1,4 +1,6 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc.  All rights reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
+﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+// Licensed under the Apache License, Version 2.0. 
+// See http://www.apache.org/licenses/LICENSE-2.0.html.
 // JavaScript Dynamic Content shim for Windows Store apps
 (function () {
 
@@ -44,7 +46,7 @@
         function insertAdjacentHTML(element, position, html) {
             HTMLElement_insertAdjacentHTMLPropertyDescriptor.value.call(element, position, html);
         }
-        
+
         function inUnsafeMode() {
             var isUnsafe = true;
             try {
@@ -53,7 +55,7 @@
             catch (ex) {
                 isUnsafe = false;
             }
-            
+
             return isUnsafe;
         }
 
@@ -130,7 +132,7 @@
                 }
                 if (cleaner.body) {
                     cleanedNodes = cleanedNodes.concat(Array.prototype.slice.call(document.adoptNode(cleaner.body).childNodes));
-                }  
+                }
             }
 
             return cleanedNodes;
@@ -142,7 +144,7 @@
             Object.defineProperty(HTMLElement.prototype, property, {
                 get: propertyDescriptor.get,
                 set: function (value) {
-                    if(window.WinJS && window.WinJS._execUnsafe && inUnsafeMode()) {
+                    if (window.WinJS && window.WinJS._execUnsafe && inUnsafeMode()) {
                         originalSetter.call(this, value);
                     } else {
                         var that = this;
