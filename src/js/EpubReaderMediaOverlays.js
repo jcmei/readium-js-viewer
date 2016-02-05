@@ -1,12 +1,10 @@
 
-define(['readium_shared_js/globals', 'module','jquery', 'underscore', 'bootstrap', 'readium_js/Readium', './Spinner', 'Settings', 'i18nStrings', './Dialogs', './Keyboard'], 
-        function (Globals, module, $, _, bootstrap, Readium, spinner, Settings, Strings, Dialogs, Keyboard) {
+define(['module','jquery', 'underscore', 'bootstrap', 'readium_js/Readium', './Spinner', 'Settings', 'i18nStrings', './Dialogs', './Keyboard'], 
+        function (module, $, _, bootstrap, Readium, spinner, Settings, Strings, Dialogs, Keyboard) {
 
     var init = function(readium) {
 
         readium.reader.on(ReadiumSDK.Events.PAGINATION_CHANGED, function (pageChangeData) {
-            
-            Globals.logEvent("PAGINATION_CHANGED", "ON", "EpubReaderMediaOverlays.js");
             // That's after mediaOverlayPlayer.onPageChanged()
 
             if (readium.reader.isMediaOverlayAvailable()) {
@@ -81,61 +79,81 @@ define(['readium_shared_js/globals', 'module','jquery', 'underscore', 'bootstrap
                 Settings.put('reader', json);
             }
 
-            var settingsToUpdate = { doNotUpdateView: true };
-
             if (json.mediaOverlaysSkipSkippables) // excludes typeof json.mediaOverlaysSkipSkippables === "undefined", so the default is to disable skippability
             {
                 $audioPlayer.addClass('skip');
 
-                settingsToUpdate.mediaOverlaysSkipSkippables = true;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysSkipSkippables: true
+                });
             }
             else
             {
                 $audioPlayer.removeClass('skip');
 
-                settingsToUpdate.mediaOverlaysSkipSkippables = false;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysSkipSkippables: false
+                });
             }
 
             if (json.mediaOverlaysPreservePlaybackWhenScroll)
             {
                 $audioPlayer.addClass('playScroll');
 
-                settingsToUpdate.mediaOverlaysPreservePlaybackWhenScroll = true;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysPreservePlaybackWhenScroll: true
+                });
             }
             else
             {
                 $audioPlayer.removeClass('playScroll');
 
-                settingsToUpdate.mediaOverlaysPreservePlaybackWhenScroll = false;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysPreservePlaybackWhenScroll: false
+                });
             }
 
             if (json.mediaOverlaysAutomaticPageTurn)
             {
                 $audioPlayer.addClass('autoPageTurn');
 
-                settingsToUpdate.mediaOverlaysAutomaticPageTurn = true;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysAutomaticPageTurn: true
+                });
             }
             else
             {
                 $audioPlayer.removeClass('autoPageTurn');
 
-                settingsToUpdate.mediaOverlaysAutomaticPageTurn = false;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysAutomaticPageTurn: false
+                });
             }
 
             if (json.mediaOverlaysEnableClick)
             {
                 $audioPlayer.removeClass('no-touch');
 
-                settingsToUpdate.mediaOverlaysEnableClick = true;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysEnableClick: true
+                });
             }
             else
             {
                 $audioPlayer.addClass('no-touch');
 
-                settingsToUpdate.mediaOverlaysEnableClick = false;
+                readium.reader.updateSettings({
+                    doNotUpdateView: true,
+                    mediaOverlaysEnableClick: false
+                });
             }
-            
-            readium.reader.updateSettings(settingsToUpdate);
         });
 
         var $moSyncDefault = $('#mo-sync-default');
@@ -459,8 +477,6 @@ define(['readium_shared_js/globals', 'module','jquery', 'underscore', 'bootstrap
         );
 
         readium.reader.on(ReadiumSDK.Events.MEDIA_OVERLAY_STATUS_CHANGED, function (value) {
-            
-            Globals.logEvent("MEDIA_OVERLAY_STATUS_CHANGED", "ON", "EpubReaderMediaOverlays.js");
 
             //var $audioPlayerControls = $('#audioplayer button, #audioplayer input:not(.mo-sync)');
 
