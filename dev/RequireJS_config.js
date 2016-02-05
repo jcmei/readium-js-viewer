@@ -21,20 +21,13 @@ window.location ? (
 ;
 
 
-// EXAMPLES OF NPM COMMANDS:
-//npm run http
-//npm run http2
-//RJS_HTTP_IP="127.0.0.1" npm run http
-//export RJS_HTTP_IP="0.0.0.0"; npm run http
-
-
-var EPUB_LIB_JSON = "http://127.0.0.1:8080/epub_library.opds";
+var EPUB_LIB_JSON = "http://127.0.0.1:8080/epub_library.json";
 //"http://development.readium.divshot.io/epub_content/epub_library.json"
 
 // check for non-CORS mode
-if (HTTPServerRootFolder.indexOf("9090") < 0) {
-    //EPUB_LIB_JSON = HTTPServerRootFolder + "/epub_content/epub_library.opds";
-    EPUB_LIB_JSON = "../epub_content/epub_library.opds";
+if (HTTPServerRootFolder.indexOf("127.0.0.1") > 0) {
+    //EPUB_LIB_JSON = HTTPServerRootFolder + "/epub_content/epub_library.json";
+    EPUB_LIB_JSON = "../epub_content/epub_library.json";
 }
 
 console.log("Default URL of ebooks library: " + EPUB_LIB_JSON);
@@ -69,7 +62,7 @@ require.config({
 
         'readium_js_viewer/ModuleConfig' : {
 
-            'mathJaxUrl': HTTPServerRootFolder + '/node_modules/mathjax-single-file/dist/MathJax.js',
+            'mathJaxUrl': HTTPServerRootFolder + '/node_modules/MathJax-grunt-concatenator/MathJax.js',
 
             'annotationCSSUrl': HTTPServerRootFolder + '/src/css/annotations.css',
 
